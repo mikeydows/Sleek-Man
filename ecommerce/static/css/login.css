@@ -1,0 +1,133 @@
+*{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+a{
+    color:black;
+}
+
+header{
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background-color: black ;
+    padding: 5px;
+}
+
+nav{
+    margin: 0 auto;
+}
+
+nav .logo img{
+    width: 70px;
+    height: 50px;
+}
+
+nav .logo h1{
+    font-family: 'Times New Roman', Times, serif;
+}
+
+nav .logo{
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    gap: 3em;
+    align-items: center;
+    color: white;
+}
+
+video{
+    position: fixed;
+    z-index: -1;
+    width: 100%;
+    height: 1000px;
+    top: -200px;
+    left: 0;
+}
+
+.form{
+    width: 30%;
+    margin: 230px auto 100px auto;
+    padding: 20px;
+    backdrop-filter: blur(5px);
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 4px 0.09px;
+}
+
+.form h1{
+    font-size: 2.5em;
+
+}
+
+#password, #email{
+    background-color: transparent;
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid black;
+    color: black;
+    width: 50%;
+    margin-bottom: 15px;
+    height: 30px;
+}
+
+#password::placeholder, #email::placeholder{
+    color: black;
+}
+
+#login{
+    background-color: black;
+    width: 53%;
+    padding: 15px;
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+    border: none;
+    border-radius: 10px;
+    margin: 20px auto;
+    transition: all 0.2s;
+}
+
+#login:hover{
+    background-color: white;
+    color: black;
+    transition: all 0.2s;
+    box-shadow: 0 0 2px 0.2px;
+}
+
+.create .forgot{
+    display: flex;
+    width: 68%;
+    justify-content: space-between;
+    margin: 10px auto;
+}
+
+.create .signup{
+    margin: 30px auto;
+}
+
+.home{
+    width: 50%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.home a{
+    display: inline-block;
+    width: 30%;
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+.home a:hover{
+    background-color: white;
+    color: black;
+    transition: all 0.2s;
+    box-shadow: 0 0 2px 0.2px;
+}
