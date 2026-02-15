@@ -1,5 +1,11 @@
 from django.urls import path
 from . import views
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from allauth.socialaccount.providers.oauth2.views import OAuth2LoginView
+
+class GoogleLoginDirect(OAuth2LoginView):
+    adapter_class = GoogleOAuth2Adapter
+
 
 urlpatterns = [
     path("", views.home, name = "home"),
@@ -9,5 +15,5 @@ urlpatterns = [
     path("product/", views.product, name="product"),
     path("about/", views.about, name="about" ),
     path("settings/", views.settings, name="settings"),
-
+     path('accounts/google/login/', GoogleLoginDirect.as_view(), name='google_login'),
 ]

@@ -1,5 +1,7 @@
 {% load static %}
 {% include 'reg-navbar.html' %}
+{% load socialaccount %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -112,6 +114,24 @@ video{
     transition: all 0.2s;
     box-shadow: 0 0 5px 0.2px;
 }
+
+.google-btn {
+    display: block;
+    width: 53%;
+    margin: 15px auto;
+    padding: 12px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+}
+
+.google-btn:hover {
+    background: #f2f2f2;
+}
+
 </style>
 <body>
     <header>
@@ -146,6 +166,14 @@ video{
                 </div>
             </div>
         </div>
+
+        <hr>
+<p>Or sign up with</p>
+
+<a href="{% provider_login_url 'google' process='login' %}" class="google-btn">
+    <i class="fa-brands fa-google"></i> Continue with Google
+</a>
+
 
         <div class="home">
             <a href="{% url 'home' %}">Go to Home</a>

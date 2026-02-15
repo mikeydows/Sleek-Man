@@ -13,7 +13,7 @@ def product(request):
     return render(request, "product.html")
 
 def settings(request):
-    return render(request, "settinngs.html")
+    return render(request, "settings.html")
 
 def signup(request):
     if request.method == "POST":
