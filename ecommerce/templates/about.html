@@ -1,3 +1,5 @@
+{% load static %}
+{% include 'navbar.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,46 +7,213 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="assets/css/about.css">
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
     <script src="https://kit.fontawesome.com/39a01f771c.js" crossorigin="anonymous"></script>
 </head>
+<style>
+    *{
+    font-family: 'Times New Roman', Times, serif;
+}
+
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    color: white;
+    backdrop-filter: blur(5px);
+}
+
+.header{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.header .logo{
+    display: flex;
+    align-items: center;
+    gap: 2em;
+}
+
+.header .logo img{
+    width: 50px;
+}
+
+.header .navbar nav ol{
+    display: flex;
+    justify-content: center;
+    gap: 3em;
+}
+
+.header .navbar nav ol li{
+    list-style-type: none;
+}
+
+.header .navbar nav ol li a{
+    color: white;
+    font-size: 1.3em;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.header .navbar nav ol li a:hover{
+    border-bottom: 2px solid white;
+    padding: 10px;
+    transition: all 0.2s;
+}
+
+/*.search input{
+    padding: 10px;
+    color: black;
+    background-color: transparent;
+    border: 1px solid black;
+    width: 270px;
+    border-radius: 50px;
+    font-size: 1em;
+
+}
+
+.search button{
+    background-color: black;
+    color: white;
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 50px;
+    width: 100px;
+}*/
+
+.sign{
+    display: flex;
+    gap: 1em;
+    align-items: center;
+}
+
+.sign a{
+    text-decoration: none;
+    font-size: 1.2em;
+    color: white;
+    font-weight: bold;
+}
+
+#signup{
+    background-color: white;
+    color: black;
+    display: inline-block;
+    width: 80px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 50px;
+}
+
+#signup:hover{
+    background-color: rgb(41, 40, 40);
+    color: white;
+    transition: all 0.2s;
+}
+
+main{
+    margin: 0;
+    padding: 86px;
+    width: 90%;
+    background-color: black;
+    position: relative;
+    left: 0;
+    top: 0;
+    color: white;
+}
+
+.head{
+    margin: 100px auto 0 auto;
+    text-align: center;
+}
+
+.head .logo img{
+    width: 30%;
+}
+
+.head .logoname h1{
+    font-size: 20vh;
+}
+
+.about{
+    width: 70%;
+    margin: 10px auto;
+    z-index: 4;
+}
+
+.about h2, .about h3, .about p, .about b{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    width: 90%;
+    margin: 10px auto;
+    z-index: 2;
+}
+
+#bottle{
+    width: 70em;
+    position: absolute;
+    left: -30em;
+    transform: rotate(50deg);
+    top: 0;
+}
+
+#brush{
+    width: 50em;
+    position: absolute;
+    right: -18em;
+    transform: rotate(50deg);
+    top: 50em;
+}
+
+#pomade{
+    width: 36em;
+    position: absolute;
+    left: -10em;
+    transform: rotate(50deg);
+    top: 70em;
+}
+
+.order{
+    width: 70%;
+    text-align: center;
+    margin: 130px auto 0 auto;
+}
+
+.order a{
+    display: inline-block;
+    width: 300px;
+    background-color: white;
+    transition: all 0.2s;
+    padding: 10px;
+    border-radius: 6px;
+    color: black;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.order a:hover{
+    background-color: rgb(41, 40, 40);
+    color: white;
+    transition: all 0.2s;
+}
+</style>
 <body>
     <header>
-        <div class="header">
-            <div class="logo">
-                <img src="assets/images/logo.jpg" alt="logo">
-                <h3>SLEEK MAN</h3>
-            </div>
-
-            <div class="navbar">
-                <nav>
-                    <ol>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="product.html">Products</a></li>
-                        <li><a href="about.html">About</a></li>
-                    </ol>
-                </nav>
-            </div>
-
-            <!--<div class="search">
-                <form action="">
-                    <input type="search" placeholder="What are you looking for?...">
-                    <button type="submit">Search</button>
-                </form>
-            </div>-->
-
-            <div class="sign">
-                <a id="login" href="registration/login.html">Login</a>
-                <a id="signup" href="registration/signup.html">Sign Up</a>
-            </div>
-        </div>
+        {% block content %}
+        {% endblock %}
     </header>
 
     <main>
         <div class="head">
             <div class="logo">
-                <img src="assets/images/logo.jpg" alt="">
-            </div>
+                <img src="{% static 'images/logo.jpg'%}">
 
             <div class="logoname">
                 <h1>SLEEK MAN</h1>
@@ -79,9 +248,9 @@
             <a href="product-details.html"><i class="fa-solid fa-right-to-bracket fa-sm" style="color: #000;"></i> View Products Details</a>
         </div>
 
-        <img src="assets/images/bottle.png" id="bottle" alt="">
-        <img src="assets/images/brush.png" alt="" id="brush">
-        <img src="assets/images/pomade.png" alt="" id="pomade">
+        <img src="{% static 'images/bottle.png'%}" id="bottle" alt="">
+        <img src="{% static 'images/brush.png' %}" alt="" id="brush">
+        <img src="{% static 'images/pomade.png' %}" alt="" id="pomade">
 
         <div class="socialmedia">
             <div class="head">

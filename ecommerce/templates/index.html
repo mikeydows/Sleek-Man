@@ -1,4 +1,6 @@
 {% load static %}
+{% include 'navbar.html' %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +8,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="{% static 'sleekApp/css/style.css' %}">
     <script src="https://kit.fontawesome.com/39a01f771c.js" crossorigin="anonymous"></script>
 </head>
 
@@ -14,101 +15,6 @@
     *{
     font-family: 'Times New Roman', Times, serif;
 }
-
-header{
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 2;
-    color: white;
-}
-
-.header{
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-    margin: 0 auto;
-    align-items: center;
-}
-
-.header .logo{
-    display: flex;
-    align-items: center;
-    gap: 2em;
-}
-
-.header .logo img{
-    width: 50px;
-}
-
-.header .navbar nav ol{
-    display: flex;
-    justify-content: center;
-    gap: 3em;
-}
-
-.header .navbar nav ol li{
-    list-style-type: none;
-}
-
-.header .navbar nav ol li a{
-    color: black;
-    font-size: 1.3em;
-    text-decoration: none;
-    font-weight: bold;
-    transition: all 0.2s;
-}
-
-.header .navbar nav ol li a:hover{
-    color: white;
-    border-bottom: 2px solid white;
-    padding: 10px;
-    transition: all 0.2s;
-}
-
-/*.search input{
-    padding: 10px;
-    color: black;
-    background-color: transparent;
-    border: 1px solid black;
-    width: 270px;
-    border-radius: 50px;
-    font-size: 1em;
-
-}
-
-.search button{
-    background-color: black;
-    color: white;
-    padding: 10px;
-    font-size: 1em;
-    border-radius: 50px;
-    width: 100px;
-}*/
-
-.sign{
-    display: flex;
-    gap: 1em;
-    align-items: center;
-}
-
-.sign a{
-    text-decoration: none;
-    font-size: 1.2em;
-    color: white;
-    font-weight: bold;
-}
-
-#signup{
-    background-color: black;
-    color: white;
-    display: inline-block;
-    width: 110px;
-    text-align: center;
-    padding: 13px;
-    border-radius: 50px;
-}
-
 .overlay{
     position: absolute;
     width: 100%;
@@ -180,42 +86,17 @@ main{
 </style>
 <body>
     <header>
-        <div class="header">
-            <div class="logo">
-                <img src="{% static 'images/logo.jpg' %} " alt="logo">
-                <h3>SLEEK MAN</h3>
-            </div>
-
-            <div class="navbar">
-                <nav>
-                    <ol>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="product.html">Products</a></li>
-                        <li><a href="about.html">About</a></li>
-                    </ol>
-                </nav>
-            </div>
-
-            <!--<div class="search">
-                <form action="">
-                    <input type="search" placeholder="What are you looking for?...">
-                    <button type="submit">Search</button>
-                </form>
-            </div>-->
-
-            <div class="sign">
-                {% if user.is_authenticated %}
-                        <a id="profile" href="{% url 'profile' %}">Hey {{ user.username }}</a>
-                    {% else %}
-                        <a id="login" href="{% url 'login' %}">Login</a>
-                        <a id="signup" href="{% url 'signup' %}">Signup <i class="fa-solid fa-circle-user fa-lg" style="color: #ffffff;"></i></a>
-                    {% endif %}
-            </div>
-        </div>
+    {% block content %}
+    {% endblock %}
     </header>
-
     <main>
-        <video src="assets/images/video.mp4" autoplay loop></video>
+        <!--<video src="{% static 'images/video.mp4' %}" autoplay loop></video>-->
+        
+
+    <video autoplay loop muted playsinline>
+        <source src="{% static 'images/video.mp4' %}" type="video/mp4">
+    </video>
+
 
         <div class="main">
             <div class="head">

@@ -6,6 +6,12 @@ from django.contrib.auth.models import User
 def home(request):
     return render(request, "index.html")
 
+def about(request):
+    return render(request, "about.html")
+
+def product(request):
+    return render(request, "product.html")
+
 def signup(request):
     if request.method == "POST":
         username = request.POST.get("username")
