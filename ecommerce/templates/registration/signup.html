@@ -129,12 +129,13 @@ video{
             </div>
 
             <form action="{% url 'home' %}" method="post">
-                <input type="text" name="firstName" id="fname" placeholder="First Name"><br>
-                <input type="text" name="lastName" id="lname" placeholder="Last Name"><br>
-                <input type="text" name="number" id="number" placeholder="Phone Number"><br>
-                <input type="email" name="email" id="email" placeholder="Email"><br>
-                <input type="password" name="password1" id="password" placeholder="Enter Password"><br>
-                <input type="password" name="password2" id="password" placeholder="Confirm Password"><br>
+                {% csrf_token %}
+                <input type="text" name="firstName" id="fname" placeholder="First Name" required><br>
+                <input type="text" name="lastName" id="lname" placeholder="Last Name" required><br>
+                <input type="text" name="number" id="number" placeholder="Phone Number" inputmode="numeric" required><br>
+                <input type="email" name="email" id="email" placeholder="Email" required><br>
+                <input type="password" name="password1" id="password" placeholder="Enter Password" required><br>
+                <input type="password" name="password2" id="password" placeholder="Confirm Password" required><br>
                 <input type="submit" name="signin" id="sign" value="Sign In">
             </form>
 

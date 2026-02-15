@@ -12,6 +12,9 @@ def about(request):
 def product(request):
     return render(request, "product.html")
 
+def settings(request):
+    return render(request, "settinngs.html")
+
 def signup(request):
     if request.method == "POST":
         username = request.POST.get("username")
