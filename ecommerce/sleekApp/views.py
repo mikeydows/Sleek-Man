@@ -15,60 +15,61 @@ def product(request):
 def settings(request):
     return render(request, "settings.html")
 
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib import messages
+from .models import Profile
+
 def signup(request):
     if request.method == "POST":
-        username = request.POST.get("username")
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
         email = request.POST.get("email")
+        phone = request.POST.get("number")
         password1 = request.POST.get("password1")
         password2 = request.POST.get("password2")
-        firstname = request.POST.get("firstname")
-        lastname = request.POST.get("lastname")
 
         if password1 != password2:
-            messages.error(request, "password doesnt match... Try again!")
-            return redirect("signup")
-        
-        if username is None:
-            messages.error(request, "Username cannot be empty")
-            return redirect("signup")
-        
-        if email is None:
-            messages.error(request, "emake sure to enter the correct email")
+            messages.error(request, "Passwords do not match")
             return redirect("signup")
 
-        if User.objects.filter(username = username).exists():
-            messages.error(request, "Usrname exist, Try logging in")
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "Email already registered")
             return redirect("signup")
-
 
         user = User.objects.create_user(
-                username = username,
-                email = email,
-                password = password1,
-                )
-        
-        login(user)
-        return redirect("home")
-    return render (request, "registration/signup.html")
-
-def loginPage(request):
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-
-        user = authenticate(
-            request, 
-            username = username, 
-            password = password
+            username=email,
+            email=email,
+            password=password1,
+            first_name=first_name,
+            last_name=last_name
         )
 
-        if user is None:
-            messages.error(request, "Wrong credentials, Try again")
-            return redirect("login")
-        else:
-            login(request, user)
-            return redirect("home")
-    return render(request, "registration/login.html")
+        Profile.objects.create(
+            user=user,
+            phone_number=phone
+        )
+
+        messages.success(request, "Account created successfully")
+        return redirect("home")
+
+    return render(request, "registration/signup.html")
+
+def login_view(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        try:
+            user = User.objects.get(email=email, password=password)
+            request.session['user_id'] = user.id
+            messages.success(request, f"Welcome back, {user.first_name}!")
+            return redirect('home')
+        except User.DoesNotExist:
+            messages.error(request, "Invalid email or password")
+            return redirect('login')
+
+    return render(request, 'registration/login.html')
 
 def logoutPage(request):
     logout(request)

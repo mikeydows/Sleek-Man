@@ -130,7 +130,7 @@
 
             <div class="sign">
                 {% if user.is_authenticated %}
-                        <a id="profile" href="{% url 'settings' %}">{{ user.username }}</a>
+                        <a id="profile" href="{% url 'settings' %}">{{ user.first_name }}</a>
                     {% else %}
                         <a id="login" href="{% url 'login' %}">Login</a>
                         <a id="signup" href="{% url 'signup' %}">Signup <i class="fa-solid fa-circle-user fa-lg" style="color: #ffffff;"></i></a>

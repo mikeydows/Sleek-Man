@@ -32,7 +32,7 @@ video{
 }
 
 .form{
-    width: 30%;
+    width: 50%;
     margin: 230px auto 100px auto;
     padding: 20px;
     backdrop-filter: blur(5px);
@@ -117,7 +117,7 @@ video{
 
 .google-btn {
     display: block;
-    width: 53%;
+    width: 50%;
     margin: 15px auto;
     padding: 12px;
     background: white;
@@ -132,6 +132,22 @@ video{
     background: #f2f2f2;
 }
 
+.alert {
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.alert.error {
+    background-color: #ffe5e5;
+    color: #b30000;
+}
+
+.alert.success {
+    background-color: #e6ffea;
+    color: #006b21;
+}
 </style>
 <body>
     <header>
@@ -148,16 +164,33 @@ video{
                 <h3>Enter your credentials to sign up</h3>
             </div>
 
-            <form action="{% url 'home' %}" method="post">
+            <form action="{% url 'signup' %}" method="post">
                 {% csrf_token %}
-                <input type="text" name="firstName" id="fname" placeholder="First Name" required><br>
-                <input type="text" name="lastName" id="lname" placeholder="Last Name" required><br>
+                <input type="text" name="first_name" id="fname" placeholder="First Name" required>
+                <input type="text" name="last_name" id="lname" placeholder="Last Name" required><br>
                 <input type="text" name="number" id="number" placeholder="Phone Number" inputmode="numeric" required><br>
                 <input type="email" name="email" id="email" placeholder="Email" required><br>
                 <input type="password" name="password1" id="password" placeholder="Enter Password" required><br>
                 <input type="password" name="password2" id="password" placeholder="Confirm Password" required><br>
-                <input type="submit" name="signin" id="sign" value="Sign In">
+
+                {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <div class="alert {{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <input type="submit" name="signup" id="sign" value="Sign Up">
+                
             </form>
+
+            <div class="google">
+                <a href="{% provider_login_url 'google' process='login' %}">
+                    <i class="fa-brands fa-google"></i> Sign Up With Google
+                </a>
+            </div>
 
             <div class="create">
                 <div class="signup">
@@ -166,14 +199,6 @@ video{
                 </div>
             </div>
         </div>
-
-        <hr>
-<p>Or sign up with</p>
-
-<a href="{% provider_login_url 'google' process='login' %}" class="google-btn">
-    <i class="fa-brands fa-google"></i> Continue with Google
-</a>
-
 
         <div class="home">
             <a href="{% url 'home' %}">Go to Home</a>
