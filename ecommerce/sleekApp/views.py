@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
@@ -30,7 +30,7 @@ def add_to_cart(request, product_id):
         item.quantity += 1
         item.save()
 
-    return redirect('cart')
+    return redirect('product')
 
 def settings(request):
     return render(request, "settings.html")
