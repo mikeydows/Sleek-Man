@@ -100,7 +100,7 @@ video{
 
 .home a{
     display: inline-block;
-    width: 30%;
+    width: 40%;
     background-color: black;
     color: white;
     padding: 10px;
@@ -115,23 +115,15 @@ video{
     box-shadow: 0 0 5px 0.2px;
 }
 
-.google-btn {
-    display: block;
+.google a{
+    display: inline-block;
     width: 50%;
-    margin: 15px auto;
-    padding: 12px;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
     text-decoration: none;
     font-weight: bold;
-    color: black;
 }
-
-.google-btn:hover {
-    background: #f2f2f2;
-}
-
 .alert {
     padding: 12px;
     margin-bottom: 10px;
@@ -147,6 +139,27 @@ video{
 .alert.success {
     background-color: #e6ffea;
     color: #006b21;
+}
+
+@media (max-width:1000px){
+    .form{
+        width: 80%;
+        backdrop-filter: blur(0);
+        border: 0;
+        box-shadow: 0 0 0 0;
+        margin: 70px auto;
+    }
+
+    #password, #email, #fname, #lname, #number{
+        width: 70%;
+    }
+    .google a{
+        width: 70%;
+    }
+
+    #sign{
+        width: 73%;
+    }
 }
 </style>
 <body>
@@ -188,7 +201,7 @@ video{
 
             <div class="google">
                 <a href="{% provider_login_url 'google' process='login' %}">
-                    <i class="fa-brands fa-google"></i> Sign Up With Google
+                    <i class="fa-brands fa-google"></i> Signup With Google
                 </a>
             </div>
 

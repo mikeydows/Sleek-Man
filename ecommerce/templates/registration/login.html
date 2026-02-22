@@ -1,3 +1,8 @@
+{% load static %}
+{% include 'reg-navbar.html' %}
+{% load socialaccount %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -82,7 +87,7 @@ video{
     padding: 5px;
     border: 1px solid black;
     color: black;
-    width: 50%;
+    width: 70%;
     margin-bottom: 15px;
     height: 30px;
 }
@@ -93,7 +98,7 @@ video{
 
 #login{
     background-color: black;
-    width: 53%;
+    width: 73%;
     padding: 15px;
     color: white;
     font-weight: bold;
@@ -113,7 +118,7 @@ video{
 
 .create .forgot{
     display: flex;
-    width: 68%;
+    width: 95%;
     justify-content: space-between;
     margin: 10px auto;
 }
@@ -130,7 +135,7 @@ video{
 
 .home a{
     display: inline-block;
-    width: 30%;
+    width: 50%;
     background-color: black;
     color: white;
     padding: 10px;
@@ -144,19 +149,40 @@ video{
     transition: all 0.2s;
     box-shadow: 0 0 5px 0.2px;
 }
+
+.google a{
+    display: inline-block;
+    width: 70%;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+@media (max-width:1000px) {
+    .form{
+        width: 70%;
+        backdrop-filter: blur(0);
+        border: 0;
+        box-shadow: 0 0 0 0;
+        margin: 60px auto;
+    }
+
+    body{
+        background-color: white;
+    }
+
+}
 </style>
 <body>
     <header>
-        <nav>
-            <div class="logo">
-                <img src="/e-commerce/assets/images/logo.jpg" alt="">
-                <h1>SLEEK MAN</h1>
-            </div>
-        </nav>
+        {% block content %}
+        {% endblock %}
     </header>
 
     <main>
-        <video src="/e-commerce/assets/images/video2.mp4" autoplay loop muted></video>
+        <video src="{% static 'images/video2.mp4' %}" autoplay loop muted></video>
 
         <div class="form">
             <div class="head">
@@ -182,6 +208,12 @@ video{
                 {% endif %}
 
                 <input type="submit" name="login" id="login" value="Log In">
+
+                 <div class="google">
+                    <a href="{% provider_login_url 'google' process='login' %}">
+                        <i class="fa-brands fa-google"></i> Login With Google
+                    </a>
+                </div>
             </form>
 
             <div class="create">

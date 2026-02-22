@@ -83,6 +83,12 @@ main{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     border-radius: 10px;
 }
+
+@media (max-width:1000px) {
+    .d-page{
+        display: none;
+    }
+}
 </style>
 <body>
     <header>
@@ -90,29 +96,31 @@ main{
     {% endblock %}
     </header>
     <main>
-        <!--<video src="{% static 'images/video.mp4' %}" autoplay loop></video>-->
-        
-
-    <video autoplay loop muted playsinline>
-        <source src="{% static 'images/video.mp4' %}" type="video/mp4">
-    </video>
+        <div class="d-page">       
+            <video autoplay loop muted playsinline>
+                <source src="{% static 'images/video.mp4' %}" type="video/mp4">
+            </video>
 
 
-        <div class="main">
-            <div class="head">
-                <h1>SLEEK MAN</h1>
-                <h2>BEARD GROOMING KIT</h2>
-            </div>
+            <div class="main">
+                    <div class="head">
+                        <h1>SLEEK MAN</h1>
+                        <h2> GROOMING </h2>
+                    </div>
 
-            <div class="details">
-                <h3>EACH DROP OF SLEEK MAN PRODUCTS WILL GIVE YOU A SOFTER, FULLER AND PERFECTLY STYLED BEARD THAT BOOSTS YOUR CONFIDENCE WITH EVERY USE</h3>
-            </div>
+                    <div class="details">
+                        <h3>EACH DROP OF SLEEK MAN PRODUCTS WILL GIVE YOU A SOFTER, FULLER AND PERFECTLY STYLED BEARD THAT BOOSTS YOUR CONFIDENCE WITH EVERY USE</h3>
+                    </div>
 
-            <div class="buttons">
-                <a href="product.html">Shop Here <i class="fa-solid fa-cart-shopping fa-lg" style="color: #ffffff;"></i></a>
-                <a href="about.html">About Us <i class="fa-solid fa-arrow-right fa-sm" style="color: #ffffff;"></i></a>
-            </div>
+                    <div class="buttons">
+                        <a href="product.html">Shop Here <i class="fa-solid fa-cart-shopping fa-lg" style="color: #ffffff;"></i></a>
+                        <a href="{% url 'about' %}">About Us <i class="fa-solid fa-arrow-right fa-sm" style="color: #ffffff;"></i></a>
+                    </div>
+             </div>
         </div>
+
+
+
     </main>
 
     <footer>

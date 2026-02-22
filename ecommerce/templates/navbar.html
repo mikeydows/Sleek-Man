@@ -29,10 +29,12 @@
     display: flex;
     align-items: center;
     gap: 2em;
+    color: black;
 }
 
 .header .logo img{
     width: 50px;
+    filter: invert();
 }
 
 .header .navbar nav ol{
@@ -102,6 +104,25 @@
     padding: 13px;
     border-radius: 50px;
 }
+
+.cart{
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart button{
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+@media (max-width:1000px) {
+    .header{
+        display: none;
+    }    
+}
  
 </style>
 <header>
@@ -130,11 +151,51 @@
 
             <div class="sign">
                 {% if user.is_authenticated %}
-                        <a id="profile" href="{% url 'settings' %}">{{ user.first_name }}</a>
+                    <div class="cart">
+                        <button onclick="showCart()">
+                            <i class="fa-solid fa-cart-shopping fa-2xl"></i>
+                        </button>
+
+                        <a href="{% url 'settings' %}">
+                            <i class="fa-solid fa-gear fa-xl" style="color: black;"></i>
+                        </a>
+                    </div>
                     {% else %}
                         <a id="login" href="{% url 'login' %}">Login</a>
                         <a id="signup" href="{% url 'signup' %}">Signup <i class="fa-solid fa-circle-user fa-lg" style="color: #ffffff;"></i></a>
                     {% endif %}
+            </div>
+        </div>
+
+        <div class="p-page">
+            <div class="logo">
+                <img src="{% static 'images/logo.jpg' %}" alt="logo">
+                <h3>Sleek Man</h3>
+            </div>
+
+            <div class="nav">
+                {% if user.is_authenticated %}
+                    <div class="cart">
+                        <button onclick="showCart()">
+                            <i class="fa-solid fa-cart-shopping fa-2xl"></i>
+                        </button>
+
+                       <button onclick="showNavBar()">
+                        <i class="fa-solid fa-align-right fa-xl" style="color: white;"></i>
+                       </button>
+                    </div>
+                    {% else %}
+                    <div class="sign">
+                       <a href="{% url 'login' %}">
+                        <i class="fa-solid fa-circle-user fa-xl" style="color: white;"></i>
+                       </a>
+
+                       <button onclick="showNavBar()">
+                        <i class="fa-solid fa-align-right fa-xl" style="color: white;"></i>
+                       </button>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </header>
