@@ -1,0 +1,276 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/39a01f771c.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    
+<style>
+    header{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+    color: white;
+    background-color: black;
+    left: 0;
+    padding: 20px;
+}
+
+.header{
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.header .logo{
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    color: white;
+}
+
+.header .logo img{
+    width: 50px;
+}
+
+.header .navbar nav ol{
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+}
+
+.header .navbar nav ol li{
+    list-style-type: none;
+}
+
+.header .navbar nav ol li a{
+    color: white;
+    font-size: 1.1em;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.header .navbar nav ol li a:hover{
+    color: white;
+    border-bottom: 2px solid white;
+    padding: 10px;
+    transition: all 0.2s;
+}
+
+.search input{
+    padding: 10px;
+    color: white;
+    background-color: transparent;
+    border: 1px solid white;
+    width: 270px;
+    border-radius: 50px;
+    font-size: 1em;
+
+}
+
+.search button{
+    background-color: white;
+    color: black;
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 50px;
+    width: 100px;
+}
+
+.sign{
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+}
+
+.sign a{
+    text-decoration: none;
+    font-size: 1.2em;
+    color: white;
+    font-weight: bold;
+}
+
+#signup{
+    background-color: white;
+    color: black;
+    display: inline-block;
+    width: 110px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 50px;
+}
+
+.cart{
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart button{
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.slide{
+    width: 100%;
+    position: relative;
+    left: 0;
+    display: flex;
+    overflow-x: hidden;
+    margin: 50px 0 0 0;
+    padding: 50px;
+    justify-content: center;
+}
+
+.slide h1{
+    font-size: 5em;
+}
+
+.slide .pomade{
+    width: 70%;
+    margin: 10px auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+@media (max-width:1000px) {
+    .header{
+        display: none;
+    }    
+}
+ 
+</style>
+<header>
+        <div class="header">
+            <div class="logo">
+                <img src="{% static 'images/logo.jpg' %} " alt="logo">
+                <h3>SLEEK MAN</h3>
+            </div>
+
+            <div class="navbar">
+                <nav>
+                    <ol>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'product'  %}">Products</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                    </ol>
+                </nav>
+            </div>
+
+            <div class="search">
+                <form action="">
+                    <input type="search" placeholder="What are you looking for?...">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+
+            <div class="sign">
+                {% if user.is_authenticated %}
+                    <div class="cart">
+                        <button onclick="showCart()">
+                            <i class="fa-solid fa-cart-shopping fa-2xl"></i>
+                        </button>
+
+                        <a href="{% url 'settings' %}">
+                            <i class="fa-solid fa-gear fa-xl" style="color: black;"></i>
+                        </a>
+                    </div>
+                    {% else %}
+                        <a id="login" href="{% url 'login' %}">Login</a>
+                        <a id="signup" href="{% url 'signup' %}">Signup <i class="fa-solid fa-circle-user fa-lg" style="color: #ffffff;"></i></a>
+                    {% endif %}
+            </div>
+        </div>
+
+        <!--<div class="p-page">
+            <div class="logo">
+                <img src="{% static 'images/logo.jpg' %}" alt="logo">
+                <h3>Sleek Man</h3>
+            </div>
+
+            <div class="nav">
+                {% if user.is_authenticated %}
+                    <div class="cart">
+                        <button onclick="showCart()">
+                            <i class="fa-solid fa-cart-shopping fa-2xl"></i>
+                        </button>
+
+                       <button onclick="showNavBar()">
+                        <i class="fa-solid fa-align-right fa-xl" style="color: white;"></i>
+                       </button>
+                    </div>
+                    {% else %}
+                    <div class="sign">
+                       <a href="{% url 'login' %}">
+                        <i class="fa-solid fa-circle-user fa-xl" style="color: white;"></i>
+                       </a>
+
+                       <button onclick="showNavBar()">
+                        <i class="fa-solid fa-align-right fa-xl" style="color: white;"></i>
+                       </button>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>-->
+    </header>
+
+    <main>
+        <div class="slide">
+            <div class="pomade">
+                <div class="img">
+                    <img src="{% static 'images/manp.png' %}" alt="">
+                </div>
+
+                <div class="details">
+                    <div class="head">
+                        <h1>Fine Beard Balm</h1>
+                    </div>
+
+                    <div class="det">
+                        <p>Styling, Softening and Conditioning</p>
+                    </div>
+
+                    <div class="buy">
+                        <button onclick="callToOrder()">Call To Order</button>
+                        <a href="">Add to cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="oil">
+                <div class="img">
+                    <img src="{% static 'images/oil.png' %}" alt="">
+                </div>
+
+                <div class="details">
+                    <div class="head">
+                        <h1>Beard Oil</h1>
+                    </div>
+
+                    <div class="det">
+                        <p>Your beard remain Irresistible and Exotic all day long</p>
+                    </div>
+
+                    <div class="buy">
+                        <button onclick="callToOrder()">Call to order</button>
+                        <a href="">Add to cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
