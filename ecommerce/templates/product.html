@@ -4,9 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Products</title>
     <script src="https://kit.fontawesome.com/39a01f771c.js" crossorigin="anonymous"></script>
-
 </head>
 <body>
     
@@ -122,31 +121,141 @@
     cursor: pointer;
 }
 
-.slide{
-    width: 100%;
-    position: relative;
-    left: 0;
-    display: flex;
-    overflow-x: hidden;
-    margin: 50px 0 0 0;
-    padding: 50px;
-    justify-content: center;
+@keyframes slide {
+    0%{transform: translateX(0);}
+    25%{transform: translateX(0);}
+    30%{transform: translateX(-100%);}
+    50%{transform: translateX(-100%);}
+    55%{transform: translateX(-200%);}
+    75%{transform: translateX(-200%);}
 }
 
-.slide h1{
-    font-size: 5em;
+.slide{
+    width: 80%;
+    margin: 50px auto 0 auto;
+    display: flex;
+    padding: 50px;
+    animation: slide 15s infinite paused;
+}
+
+.slide img{
+    width: 40em;
+    mask-image: linear-gradient(to bottom, #000, transparent);
 }
 
 .slide .pomade{
     width: 100%;
-    margin: 10px auto;
     display: flex;
-    justify-content: space-around;
+    align-items: center;
+    margin: 50px auto;
+    gap: 1em;
+}
+
+.slide .oil{
+    width: 100%;
+    display: none ;
+    align-items: center;
+    margin: 10px auto;
+    gap: 1em;
+}
+
+.slide .img, .slide .details{
+    width: 50%;
+    margin: 0;
+}
+
+.slide h1{
+    font-size: 5em;
+    margin: 0;
+}
+
+.slide button{
+    width: 200px;
+    background-color: #000;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 10px;
+    border: 0;
+    margin: 10px auto;
+    cursor: pointer;
+}
+
+.slide .buy a{
+    display: inline-block;
+    width: 180px;
+    font-weight: bold;
+    padding: 10px;
+    margin: 4px auto;
+    text-decoration: none;
+    color: black;
+    text-align: center;
+    box-shadow: 0 0 3px 0.5px;
+    border-radius: 10px;
+}
+
+.slide #contact, #contact2{
+    display: none;
+    gap: 1em;
     align-items: center;
 }
 
-.slide img{
-    mask-image: linear-gradient(to top, rgb(0,0,0,0), rgb(0,0,0,1));
+.slide #contact a, #contact2 a{
+    color: black;
+}
+
+.mainhead .buttons{
+    display: flex;
+    gap: 2em;
+    margin: 10px auto;
+    width: 30%;
+    text-align: center;
+    position: relative;
+    top: -30px;
+}
+
+.mainhead .buttons button{
+    background-color: transparent;
+    padding: 5px;
+    border-radius: 50px;
+    border: 0;
+    margin: 10px auto;
+    font-size: 1.2em;
+    cursor:pointer;
+}
+
+.product *{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    width: 50%;
+}
+
+.products{
+    margin: 30px auto;
+    display: grid;
+    grid-template: 1fr 1fr/ 1fr 1fr 1fr 1fr;
+    gap: 1em;
+}
+.products .item{
+    width: 200px;
+    border: 2px black solid;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.products a{
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: inline-block;
+    width: 120px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.products img{
+    height: 200px;
+    width: 200px;
 }
 
 @media (max-width:1000px) {
@@ -184,16 +293,16 @@
                 {% if user.is_authenticated %}
                     <div class="cart">
                         <button onclick="showCart()">
-                            <i class="fa-solid fa-cart-shopping fa-2xl"></i>
+                            <i class="fa-solid fa-cart-shopping fa-2xl" style="color: white;"></i>
                         </button>
 
                         <a href="{% url 'settings' %}">
-                            <i class="fa-solid fa-gear fa-xl" style="color: black;"></i>
+                            <i class="fa-solid fa-gear fa-xl" style="color: white;"></i>
                         </a>
                     </div>
                     {% else %}
                         <a id="login" href="{% url 'login' %}">Login</a>
-                        <a id="signup" href="{% url 'signup' %}">Signup <i class="fa-solid fa-circle-user fa-lg" style="color: #ffffff;"></i></a>
+                        <a id="signup" href="{% url 'signup' %}">Signup <i class="fa-solid fa-circle-user fa-lg"></i></a>
                     {% endif %}
             </div>
         </div>
@@ -232,49 +341,176 @@
     </header>
 
     <main>
-        <div class="slide">
-            <div class="pomade">
-                <div class="img">
-                    <img src="{% static 'images/manp.png' %}" alt="">
+        <div class="mainhead">
+            <div class="slide">
+                <div class="pomade" id="pomade">
+                    <div class="img">
+                        <img src="{% static 'images/manp.png' %}" alt="">
+                    </div>
+
+                    <div class="details">
+                        <div class="head">
+                            <h1>Fine Beard Balm</h1>
+                        </div>
+
+                        <div class="det">
+                            <p>Styling, Softening and Conditioning</p>
+                        </div>
+
+                        <div class="buy">
+                            <a href=""> 
+                                <i class="fa-solid fa-cart-shopping fa-lg" style="margin-right: 0.5em;"></i>
+                                Add to cart
+                            </a>
+                            <br>
+                            <button onclick="callToOrder()">
+                                <i class="fa-solid fa-phone fa-lg" style="margin-right: 0.5em;"></i>
+                                Call To Order
+                            </button>
+                        </div>
+
+                        <div id="contact">
+                                <a href="https://www.tiktok.com/@sleek__asee?_r=1"><i class="fa-brands fa-tiktok fa-xl"></i></a>
+                                <a href="https://instagram.com/sleek_man.grooming"><i class="fa-brands fa-instagram fa-xl" s></i></a>
+                                <a href="mailto:sleekmangrooming@gmail.com"><i class="fa-solid fa-envelope fa-xl" s></i></a>
+                                <a href="http://wa.me/233594354079"><i class="fa-brands fa-whatsapp fa-xl"></i></a>
+                                <a href="https://youtube.com/@the_Beard-den_with_Asee?si=msUnoQiwpq1e-fXL"><i class="fa-brands fa-youtube fa-xl"></i></a>
+                                <a href="tel:0506989075"><i class="fa-solid fa-phone fa-xl"></i></a>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="details">
-                    <div class="head">
-                        <h1>Fine Beard Balm</h1>
+                <div class="oil" id="oil">
+                    <div class="img">
+                        <img src="{% static 'images/oil.png' %}" alt="">
                     </div>
 
-                    <div class="det">
-                        <p>Styling, Softening and Conditioning</p>
-                    </div>
+                    <div class="details">
+                        <div class="head">
+                            <h1>Beard Oil</h1>
+                        </div>
 
-                    <div class="buy">
-                        <button onclick="callToOrder()">Call To Order</button>
-                        <a href="">Add to cart</a>
+                        <div class="det">
+                            <p>Your beard remain Irresistible and Exotic all day long</p>
+                        </div>
+
+                        <div class="buy">
+                            <a href="">
+                                <i class="fa-solid fa-cart-shopping fa-lg" style="margin-right: 0.5em;"></i>
+                                Add to cart
+                            </a>
+                            <br>
+                            <button onclick="callToOrder()">
+                                <i class="fa-solid fa-phone fa-lg" style="margin-right: 0.5em;"></i>
+                                Call to order
+                            </button>
+                        </div>
+
+                        <div id="contact2">
+                                <a href="https://www.tiktok.com/@sleek__asee?_r=1"><i class="fa-brands fa-tiktok fa-xl"></i></a>
+                                <a href="https://instagram.com/sleek_man.grooming"><i class="fa-brands fa-instagram fa-xl" s></i></a>
+                                <a href="mailto:sleekmangrooming@gmail.com"><i class="fa-solid fa-envelope fa-xl" s></i></a>
+                                <a href="http://wa.me/233594354079"><i class="fa-brands fa-whatsapp fa-xl"></i></a>
+                                <a href="https://youtube.com/@the_Beard-den_with_Asee?si=msUnoQiwpq1e-fXL"><i class="fa-brands fa-youtube fa-xl"></i></a>
+                                <a href="tel:0506989075"><i class="fa-solid fa-phone fa-xl"></i></a>
+                            </div>
                     </div>
                 </div>
             </div>
 
-            <div class="oil">
-                <div class="img">
-                    <img src="{% static 'images/oil.png' %}" alt="">
+            <div class="buttons">
+                    <button id="prev">
+                        <i class="fa-solid fa-circle-chevron-left fa-2xl"></i>
+                    </button>
+
+                    <button id="next">
+                        <i class="fa-solid fa-circle-chevron-right fa-2xl"></i>
+                    </button>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="productPage">
+            <div class="product">
+                <div class="producthead">
+                    <h2>Check out our Products</h2>
                 </div>
 
-                <div class="details">
-                    <div class="head">
-                        <h1>Beard Oil</h1>
-                    </div>
+                <div class="filter">
 
-                    <div class="det">
-                        <p>Your beard remain Irresistible and Exotic all day long</p>
-                    </div>
+                </div>
 
-                    <div class="buy">
-                        <button onclick="callToOrder()">Call to order</button>
-                        <a href="">Add to cart</a>
-                    </div>
+                <div class="products">
+                    {% for product in products %}
+                        <div class="item">
+                            <div class="img">
+                                <img src="{{ product.image.url }}">
+                            </div>
+
+                            <div class="name">
+                                <h3>{{ product.name }}</h3>
+                            </div>
+
+                            <div class="price">
+                                <p>₵{{ product.price }}</p>
+                                <p>{{ product.quantity }}</p>
+                            </div>
+
+                            <a href="{% url 'add_to_cart' product.id %}">Add to Cart</a>
+                            <a href="">
+                                <i class="fa-regular fa-heart fa-lg"></i>
+                            </a>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </main>
+
+    <script>
+        const prev = document.getElementById("prev");
+        const next = document.getElementById("next");
+        const pomade = document.getElementById("pomade");
+        const oil = document.getElementById("oil");
+        
+        function showNext(){
+            if(window.getComputedStyle(pomade).display === "flex"){
+                pomade.style.display = "none";
+                oil.style.display = "flex";
+            }
+        }
+
+        function showPrev(){
+            if(window.getComputedStyle(oil).display === "flex"){
+                oil.style.display = "none";
+                pomade.style.display = "flex";
+            }
+        }
+
+        next.addEventListener("click", showNext);
+        prev.addEventListener("click", showPrev);  
+        
+        const contact = document.getElementById("contact");
+        contact.style.display = "none";
+        function callToOrder(){
+            if(window.getComputedStyle(contact).display === "none" ){
+                contact.style.display = "flex";
+            }
+            else{
+                contact.style.display = "none";
+            }
+        }
+
+        const contact2 = document.getElementById("contact2");
+        function callToOrder(){
+            if(window.getComputedStyle(contact2).display === "none" ){
+                contact2.style.display = "flex";
+            }
+            else{
+                contact2.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>

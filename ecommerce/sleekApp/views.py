@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
+from .models import Product, Cart, CartItem
 
 def home(request):
     return render(request, "index.html")
@@ -9,34 +10,49 @@ def home(request):
 def about(request):
     return render(request, "about.html")
 
-def product(request):
-    return render(request, "product.html")
+def product_list(request):
+    products = Product.objects.all()
+    return render(request, "product.html", {"products": products})
+    
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def add_to_cart(request, product_id):
+    product = Product.objects.get(id=product_id)
+    cart, _ = Cart.objects.get_or_create(user=request.user)
+
+    item, created = CartItem.objects.get_or_create(
+        cart=cart,
+        product=product
+    )
+
+    if not created:
+        item.quantity += 1
+        item.save()
+
+    return redirect('cart')
 
 def settings(request):
     return render(request, "settings.html")
 
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-from django.contrib import messages
-from .models import Profile
-
 def signup(request):
     if request.method == "POST":
-        first_name = request.POST.get("first_name")
-        last_name = request.POST.get("last_name")
-        email = request.POST.get("email")
-        phone = request.POST.get("number")
-        password1 = request.POST.get("password1")
-        password2 = request.POST.get("password2")
+        first_name = request.POST.get('firstName')
+        last_name = request.POST.get('lastName')
+        phone = request.POST.get('number')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
 
         if password1 != password2:
             messages.error(request, "Passwords do not match")
-            return redirect("signup")
+            return redirect('signup')
 
         if User.objects.filter(email=email).exists():
-            messages.error(request, "Email already registered")
-            return redirect("signup")
+            messages.error(request, "Email already exists")
+            return redirect('signup')
 
+        # use email as username (clean ecommerce practice)
         user = User.objects.create_user(
             username=email,
             email=email,
@@ -45,15 +61,14 @@ def signup(request):
             last_name=last_name
         )
 
-        Profile.objects.create(
-            user=user,
-            phone_number=phone
-        )
+        # save profile phone number
+        user.profile.phone_number = phone
+        user.profile.save()
 
-        messages.success(request, "Account created successfully")
-        return redirect("home")
+        messages.success(request, "Account created successfully. Please log in.")
+        return redirect('login')
 
-    return render(request, "registration/signup.html")
+    return render(request, 'registration/signup.html')
 
 def login_view(request):
     if request.method == 'POST':
