@@ -60,25 +60,24 @@
     transition: all 0.2s;
 }
 
-/*.search input{
-    padding: 10px;
+.search input{
+    padding: 5px;
     color: black;
     background-color: transparent;
-    border: 1px solid black;
-    width: 270px;
+    border: 1px solid white;
+    width: 170px;
     border-radius: 50px;
     font-size: 1em;
 
 }
 
 .search button{
-    background-color: black;
-    color: white;
-    padding: 10px;
-    font-size: 1em;
+    background-color: white;
+    color: black;
+    padding: 7px;
+    font-size: 0.8em;
     border-radius: 50px;
-    width: 100px;
-}*/
+}
 
 .sign{
     display: flex;
@@ -116,10 +115,101 @@
     cursor: pointer;
 }
 
+.p-page{
+    display: none;
+}
+
+#navbar-page{
+    display: none;
+}
 @media (max-width:1000px) {
     .header{
         display: none;
     }    
+
+    .p-page{
+        display: block;
+        width: 100%;
+        position: fixed;
+        display: flex;
+        left: 0;
+        top: 0;
+        background-color: black;
+        margin: 0;
+        padding: 10px;
+    }
+
+    .p-page .navbar{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 99%;
+    }
+
+    .p-page .logo{
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+    }
+
+    .p-page img{
+        width: 50px;
+    }
+
+    @keyframes slideIn {
+        from{left: -400px;}
+        to{left: 0;}
+    }
+
+    #navbar-page{
+        background-color: white;
+        width: 60%;
+        z-index: 2;
+        position: absolute;
+        height: 900px;
+        padding: 30px;
+        left: -400px;
+        display: block;
+        top: 0;
+        margin: 0;
+       animation: slideIn 5s infinite paused;
+    }
+
+    #navbar-page .navbar .top{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #navbar-page .navbar .top button{
+        border: 0;
+        background-color: transparent;
+        padding: 10px;
+        border-radius: 50%;
+    }
+
+
+    #navbar-page .navbar a{
+        color: black;
+        text-decoration: none;
+    }
+
+    #navbar-page .navbar .middle{
+        margin: 30px 0 0 0;
+    }
+
+    #navbar-page .navbar .middle a{
+        color: black;
+        text-decoration: none;
+        background-color: rgb(241, 239, 239);
+        padding: 10px;
+        border-radius: 7px;
+        text-align: left;
+        display: flex;
+        gap: 1em;
+        align-items: center;
+    }
 }
  
 </style>
@@ -140,13 +230,6 @@
                 </nav>
             </div>
 
-            <!--<div class="search">
-                <form action="">
-                    <input type="search" placeholder="What are you looking for?...">
-                    <button type="submit">Search</button>
-                </form>
-            </div>-->
-
             <div class="sign">
                 {% if user.is_authenticated %}
                     <div class="cart">
@@ -165,37 +248,90 @@
             </div>
         </div>
 
-        <!--<div class="p-page">
-            <div class="logo">
-                <img src="{% static 'images/logo.jpg' %}" alt="logo">
-                <h3>Sleek Man</h3>
-            </div>
+        <div class="p-page">
+            <div class="navbar">
+                <div class="logo">
+                    <img src="{% static 'images/logo.jpg' %}" alt="logo">
+                </div>
 
-            <div class="nav">
-                {% if user.is_authenticated %}
-                    <div class="cart">
-                        <button onclick="showCart()">
-                            <i class="fa-solid fa-cart-shopping fa-2xl"></i>
-                        </button>
+                <div class="search">
+                    <form action="">
+                        <input type="search" placeholder="What are you looking for?...">
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
 
-                       <button onclick="showNavBar()">
-                        <i class="fa-solid fa-align-right fa-xl" style="color: white;"></i>
-                       </button>
-                    </div>
+                <div class="nav">
+                    {% if user.is_authenticated %}
+                        <div class="cart">
+                            <a href="{% url 'cart'}">
+                                <i class="fa-solid fa-cart-shopping fa-xl" style="color: white;"></i>
+                            </button>
+
+                            <button onclick="showNavBar()">
+                                <i class="fa-solid fa-align-right fa-lg" style="color: white;"></i>
+                            </button>
+                        </div>
                     {% else %}
-                    <div class="sign">
-                       <a href="{% url 'login' %}">
-                        <i class="fa-solid fa-circle-user fa-xl" style="color: white;"></i>
-                       </a>
+                        <div class="sign">
+                            <a href="{% url 'login' %}">
+                                <i class="fa-solid fa-circle-user fa-lg" style="color: white;"></i>
+                            </a>
 
-                       <button onclick="showNavBar()">
-                        <i class="fa-solid fa-align-right fa-xl" style="color: white;"></i>
-                       </button>
-                    </div>
+                            <button onclick="showNavBar()">
+                                <i class="fa-solid fa-align-right fa-lg style="color: white;"></i>
+                            </button>
+                        </div>
                     {% endif %}
                 </div>
             </div>
-        </div>-->
+        </div>
+
+        <div id="navbar-page">
+            <div class="navbar">
+                <div class="top">
+                    <button onclick="closeNavbar()">
+                        <i class="fa-solid fa-circle-chevron-left fa-xl"></i>
+                    </button>
+
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'settings' %}">
+                            <i class="fa-solid fa-gear fa-xl"></i>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}">
+                            <i class="fa-solid fa-circle-user fa-xl"></i>
+                        </a>
+                    {% endif %}
+                </div>
+
+                <div class="middle">
+                    <a href="{% url 'home' %}">
+                        <i class="fa-solid fa-house fa-lg"></i>
+                        Home
+                    </a><br>
+                    <a href="{% url 'product' %}">
+                        <i class="fa-solid fa-shop fa-lg"></i>
+                        Products
+                    </a><br>
+                    <a href="{% url 'about' %}">
+                        <i class="fa-solid fa-circle-info fa-lg"></i>
+                        About
+                    </a><br>
+                </div>
+            </div>
+        </div>
     </header>
+
+    <script>
+        const navbar = document.getElementById("navbar-page");
+        
+        function showNavbar(){
+            navbar.style.animationPlayState = "running";
+        }
+        navbar.addEventListener("animationend", ()=>{
+            navbar.style.left = "0px";
+        })
+    </script>
 </body>
 </html>

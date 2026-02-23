@@ -29,7 +29,6 @@ def add_to_cart(request, product_id):
     if not created:
         item.quantity += 1
         item.save()
-
     return redirect('product')
 
 def settings(request):
