@@ -1,3 +1,4 @@
+{% include 'navbar.html' %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -10,47 +11,41 @@
 <body>
     
 <style>
-    header{
-    position: fixed;
-    top: 0;
+.header1{
     width: 100%;
-    z-index: 2;
-    color: white;
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+    align-items: center;
     background-color: black;
+    position: fixed;
     left: 0;
     padding: 20px;
 }
 
-.header{
-    width: 90%;
-    display: flex;
-    justify-content: space-between;
-    margin: 0 auto;
-    align-items: center;
-}
 
-.header .logo{
+.header1 .logo{
     display: flex;
     align-items: center;
     gap: 1em;
     color: white;
 }
 
-.header .logo img{
+.header1 .logo img{
     width: 50px;
 }
 
-.header .navbar nav ol{
+.header1 .navbar nav ol{
     display: flex;
     justify-content: center;
     gap: 2em;
 }
 
-.header .navbar nav ol li{
+.header1 .navbar nav ol li{
     list-style-type: none;
 }
 
-.header .navbar nav ol li a{
+.header1 .navbar nav ol li a{
     color: white;
     font-size: 1.1em;
     text-decoration: none;
@@ -58,7 +53,7 @@
     transition: all 0.2s;
 }
 
-.header .navbar nav ol li a:hover{
+.header1 .navbar nav ol li a:hover{
     color: white;
     border-bottom: 2px solid white;
     padding: 10px;
@@ -66,23 +61,26 @@
 }
 
 .search input{
-    padding: 10px;
+    padding: 5px;
     color: white;
     background-color: transparent;
     border: 1px solid white;
     width: 270px;
-    border-radius: 50px;
-    font-size: 1em;
-
+    border-radius: 10px;
 }
 
 .search button{
     background-color: white;
     color: black;
-    padding: 10px;
+    padding: 5px;
     font-size: 1em;
     border-radius: 50px;
     width: 100px;
+}
+
+.search input::placeholder{
+    color: white;
+    font-size: 0.7em;
 }
 
 .sign{
@@ -259,14 +257,19 @@
 }
 
 @media (max-width:1000px) {
-    .header{
+    .header1{
         display: none;
-    }    
+    }  
+
+    .m-page{
+        display: flex;
+        z-index: 2;
+    }
 }
  
 </style>
 <header>
-        <div class="header">
+    <div class="header1">
             <div class="logo">
                 <img src="{% static 'images/logo.jpg' %} " alt="logo">
                 <h3>SLEEK MAN</h3>
@@ -307,38 +310,13 @@
             </div>
         </div>
 
-        <!--<div class="p-page">
-            <div class="logo">
-                <img src="{% static 'images/logo.jpg' %}" alt="logo">
-                <h3>Sleek Man</h3>
-            </div>
-
-            <div class="nav">
-                {% if user.is_authenticated %}
-                    <div class="cart">
-                        <button onclick="showCart()">
-                            <i class="fa-solid fa-cart-shopping fa-2xl"></i>
-                        </button>
-
-                       <button onclick="showNavBar()">
-                        <i class="fa-solid fa-align-right fa-xl" style="color: white;"></i>
-                       </button>
-                    </div>
-                    {% else %}
-                    <div class="sign">
-                       <a href="{% url 'login' %}">
-                        <i class="fa-solid fa-circle-user fa-xl" style="color: white;"></i>
-                       </a>
-
-                       <button onclick="showNavBar()">
-                        <i class="fa-solid fa-align-right fa-xl" style="color: white;"></i>
-                       </button>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-        </div>-->
+        <div class="m-page">
+            {% block content %}
+            {% endblock %}
+        </div>
     </header>
+
+    
 
     <main>
         <div class="mainhead">

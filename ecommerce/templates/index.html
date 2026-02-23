@@ -26,6 +26,10 @@
     display: none;
 }
 
+.m-page{
+    display: none;
+}
+
 video{
     width: 100%;
     position: absolute;
@@ -88,6 +92,56 @@ main{
     .d-page{
         display: none;
     }
+
+    main{
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .main .head{
+        margin: 70px 0 0px 0;
+        text-align: center;
+        opacity: 100%;
+    }
+
+    .main .head h1{
+        font-size: 5em;
+        margin: 0;
+    }
+
+    .main .head h2{
+        font-size: 4em;
+        margin: 0;
+    }
+
+    .main .details{
+        width: 100%;
+        margin: 20px auto;
+        text-align: center;
+    }
+
+    .main .details h3{
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: 1em;
+    }
+
+    .main .buttons{
+        width: 100%;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .main .buttons a{
+        display: inline-block;
+        background-color: black;
+        color: white;
+        text-decoration: none;
+        width: 40%;
+        padding: 10px;
+        font-size: 1em;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        border-radius: 10px;
+    }
 }
 </style>
 <body>
@@ -113,14 +167,50 @@ main{
                     </div>
 
                     <div class="buttons">
-                        <a href="product.html">Shop Here <i class="fa-solid fa-cart-shopping fa-lg" style="color: #ffffff;"></i></a>
+                        <a href="{% url 'product' %}">Shop Here <i class="fa-solid fa-cart-shopping fa-lg" style="color: #ffffff;"></i></a>
                         <a href="{% url 'about' %}">About Us <i class="fa-solid fa-arrow-right fa-sm" style="color: #ffffff;"></i></a>
                     </div>
              </div>
         </div>
 
+        <div class="m-page">
+            <video autoplay loop muted playsinline>
+                <source src="{% static 'images/video.mp4' %}" type="video/mp4">
+            </video>
 
+            <div class="main">
+                    <div class="head">
+                        <h1>SLEEK MAN</h1>
+                        <h2> GROOMING </h2>
+                    </div>
 
+                    <div class="details">
+                        <h3>EACH DROP OF SLEEK MAN PRODUCTS WILL GIVE YOU A SOFTER, FULLER AND PERFECTLY STYLED BEARD THAT BOOSTS YOUR CONFIDENCE WITH EVERY USE</h3>
+                    </div>
+
+                    <div class="buttons">
+                        <a href="{% url 'product' %}">Shop Here <i class="fa-solid fa-cart-shopping fa-lg" style="color: #ffffff;"></i></a>
+                        <a href="{% url 'about' %}">About Us <i class="fa-solid fa-arrow-right fa-sm" style="color: #ffffff;"></i></a>
+                    </div>
+             </div>
+        
+
+            <div class="recommendation">
+                <div class="head">
+                    <div class="rec">
+                        <h3>Recommended</h3>
+                    </div>
+
+                    <div class="filter">
+
+                    </div>
+                </div>
+
+                <div class="product">
+
+                </div>            
+            </div>
+        </div>
     </main>
 
     <footer>

@@ -46,7 +46,7 @@
 }
 
 .header .navbar nav ol li a{
-    color: black;
+    color: white;
     font-size: 1.3em;
     text-decoration: none;
     font-weight: bold;
@@ -157,8 +157,9 @@
     }
 
     @keyframes slideIn {
-        from{left: -400px;}
-        to{left: 0;}
+        from{left: -400px;opacity: 0;}
+        
+        to{left: 0;opacity: 1;}
     }
 
     #navbar-page{
@@ -172,7 +173,8 @@
         display: block;
         top: 0;
         margin: 0;
-       animation: slideIn 5s infinite paused;
+        animation: slideIn 5s infinite paused;
+        opacity: 0;
     }
 
     #navbar-page .navbar .top{
@@ -234,11 +236,11 @@
                 {% if user.is_authenticated %}
                     <div class="cart">
                         <button onclick="showCart()">
-                            <i class="fa-solid fa-cart-shopping fa-2xl"></i>
+                            <i class="fa-solid fa-cart-shopping fa-2xl" style="color: white;"></i>
                         </button>
 
                         <a href="{% url 'settings' %}">
-                            <i class="fa-solid fa-gear fa-xl" style="color: black;"></i>
+                            <i class="fa-solid fa-gear fa-xl" style="color: white;"></i>
                         </a>
                     </div>
                     {% else %}
