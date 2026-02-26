@@ -88,3 +88,9 @@ def login_view(request):
 def logoutPage(request):
     logout(request)
     return redirect('home')
+
+def termsAndCondition(request):
+    return render(request, "terms.html")
+
+def productOverview(request):
+    return render(request, "product-overview.html")
