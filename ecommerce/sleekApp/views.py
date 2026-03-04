@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import logout, login, authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Product, Cart, CartItem
+from .models import Product, Cart, CartItem, Favorite
 
 def home(request):
     return render(request, "index.html")
@@ -12,24 +13,75 @@ def about(request):
 
 def product_list(request):
     products = Product.objects.all()
-    return render(request, "product.html", {"products": products})
-    
-from django.contrib.auth.decorators import login_required
+    sort = request.GET.get("sort")
+
+    if request.user.is_authenticated:
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        cart_items = CartItem.objects.filter(cart=cart)
+    else:
+        cart_items = []
+
+    if sort == "newest":
+        products = Product.objects.all().order_by("-id")  # newest first
+    elif sort == "low":
+        products = Product.objects.all().order_by("price")  # lowest price
+    elif sort == "high":
+        products = Product.objects.all().order_by("-price")  # highest price
+    else:
+        products = Product.objects.all()  # default / recommended
+
+    return render(request, "product.html", {
+        "products": products,
+        "cart_items": cart_items
+    })    
 
 @login_required
+@login_required
 def add_to_cart(request, product_id):
-    product = Product.objects.get(id=product_id)
-    cart, _ = Cart.objects.get_or_create(user=request.user)
+    product = get_object_or_404(Product, id=product_id)
 
-    item, created = CartItem.objects.get_or_create(
+    cart, created = Cart.objects.get_or_create(user=request.user)
+
+    cart_item, created = CartItem.objects.get_or_create(
         cart=cart,
         product=product
     )
 
     if not created:
-        item.quantity += 1
-        item.save()
+        cart_item.quantity += 1
+        cart_item.save()
+
     return redirect('product')
+
+@login_required
+def remove_from_cart(request, cart_id):
+    cart_item = get_object_or_404(CartItem, id=cart_id, cart__user=request.user)
+    cart_item.delete()
+    return redirect('product')
+
+@login_required
+def add_to_favorite(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    Favorite.objects.get_or_create(user=request.user, product=product)
+    return redirect('product')
+
+@login_required
+def remove_from_favorite(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    Favorite.objects.filter(user=request.user, product=product).delete()
+    return redirect('favorites')
+
+
+def cart_page(request):
+    if request.user.is_authenticated:
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        cart_items = CartItem.objects.filter(cart=cart)
+    else:
+        cart_items = []
+
+    return render(request, "cart.html", {
+        "cart_items": cart_items
+    })
 
 def settings(request):
     return render(request, "settings.html")
@@ -69,21 +121,22 @@ def signup(request):
 
     return render(request, 'registration/signup.html')
 
+
 def login_view(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
 
-        try:
-            user = User.objects.get(email=email, password=password)
-            request.session['user_id'] = user.id
-            messages.success(request, f"Welcome back, {user.first_name}!")
-            return redirect('home')
-        except User.DoesNotExist:
+        user = authenticate(request, username=email, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect("home")
+        else:
             messages.error(request, "Invalid email or password")
-            return redirect('login')
+            return redirect("login")
 
-    return render(request, 'registration/login.html')
+    return render(request, "registration/login.html")
 
 def logoutPage(request):
     logout(request)

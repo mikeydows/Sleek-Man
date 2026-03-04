@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://kit.fontawesome.com/39a01f771c.js" crossorigin="anonymous"></script>
 </head>
 <body>
     
@@ -213,6 +214,57 @@
         align-items: center;
     }
 }
+
+#cartPage{
+    width: 300px;
+    background-color: #ffffff;
+    box-shadow: 0 0 3px 0.5px black;
+    position: fixed;
+    right: 170px;
+    border-radius: 10px;
+    height: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: block;
+    z-index: 5;
+}
+
+#cartPage button{
+    position: relative;
+    right: 0;
+    background-color: transparent;
+    border: 0;
+    margin: 10px;
+    cursor: pointer;
+    padding: 5px;
+    width: auto;
+    border-radius: 20px;
+}
+
+.cartt{
+    text-align: center;
+    color: black;
+    margin: 50px auto;
+}
+
+.cartt a{
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.cartt img{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  opacity: 50%;
+  box-shadow: 0 0 2px 0.4px black;
+  text-align: center;
+}
+
+
  
 </style>
 <header>
@@ -266,7 +318,7 @@
                 <div class="nav">
                     {% if user.is_authenticated %}
                         <div class="cart">
-                            <a href="{% url 'cart'}">
+                            <button id="showCart" onclick="showCartPage()">
                                 <i class="fa-solid fa-cart-shopping fa-xl" style="color: white;"></i>
                             </button>
 
@@ -323,17 +375,58 @@
                 </div>
             </div>
         </div>
+
+        <div id="cartPage">
+            <button onclick="closeCartPage()">
+                <i class="fa-solid fa-circle-xmark fa-2xl"></i>
+            </button>
+            {% if cart_items %} 
+                {% for item in cart_items %}
+                    <h2>Your Orders</h2>
+                    <div class="cart-product">
+                        <div class="page">
+                            <div class="image">
+                                <img src="{{ item.product.image.url }}" style="width: 100px; height: 100px; border-radius: 10px; border: 1px solid black;">
+                            </div>
+
+                            <div class="details">
+                                <h3>{{ item.product.name }}</h3>
+                                <p>${{ item.product.price }}</p>
+                            </div>
+                        </div>
+
+                        <div class="remove">
+                            <a href="{% url 'remove_from_cart' product.id %}"></a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            {% else %}
+                <div class="cartt">
+                    <img src="{% static 'images/download.jpg' %}">
+                    <p>Your cart is empty</p>
+                    <a href="{% url 'product' %}">Get an item</a>
+                </div>
+            {% endif %}
+
+        </div>
     </header>
 
     <script>
-        const navbar = document.getElementById("navbar-page");
-        
-        function showNavbar(){
-            navbar.style.animationPlayState = "running";
+        const cartPage = document.getElementById("cartPage");
+        cartPage.style.display = "none";
+
+        function showCart(){
+            if(window.getComputedStyle(cartPage).display === "none"){
+                cartPage.style.display = "block";
+            }
         }
-        navbar.addEventListener("animationend", ()=>{
-            navbar.style.left = "0px";
-        })
+
+        function closeCartPage(){
+            if(window.getComputedStyle(cartPage).display === "block"){
+                cartPage.style.display = "none";
+            }
+        }
     </script>
 </body>
 </html>

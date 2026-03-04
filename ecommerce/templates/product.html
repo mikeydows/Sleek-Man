@@ -224,13 +224,16 @@
 
 .product *{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    width: 50%;
+}
+
+.product{
+    width: 75%;
+    margin: 100px auto;
 }
 
 .products{
-    margin: 30px auto;
-    display: grid;
-    grid-template: 1fr 1fr/ 1fr 1fr 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
     gap: 1em;
 }
 .products .item{
@@ -266,6 +269,56 @@
         z-index: 2;
     }
 }
+
+#cart{
+    width: 300px;
+    background-color: #ffffff;
+    box-shadow: 0 0 3px 0.5px black;
+    position: fixed;
+    right: 170px;
+    border-radius: 10px;
+    height: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: none;
+    z-index: 5;
+}
+
+#cart button{
+    position: relative;
+    right: 0;
+    background-color: transparent;
+    border: 0;
+    margin: 10px;
+    cursor: pointer;
+    padding: 5px;
+    width: auto;
+    border-radius: 20px;
+}
+
+.cartt{
+    text-align: center;
+    color: black;
+    margin: 50px auto;
+}
+
+.cartt a{
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.cartt img{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  opacity: 50%;
+  box-shadow: 0 0 2px 0.4px black;
+  text-align: center;
+}
+
  
 </style>
 <header>
@@ -295,7 +348,7 @@
             <div class="sign">
                 {% if user.is_authenticated %}
                     <div class="cart">
-                        <button onclick="showCart()">
+                        <button onclick="showProductCart()">
                             <i class="fa-solid fa-cart-shopping fa-2xl" style="color: white;"></i>
                         </button>
 
@@ -308,6 +361,43 @@
                         <a id="signup" href="{% url 'signup' %}">Signup <i class="fa-solid fa-circle-user fa-lg"></i></a>
                     {% endif %}
             </div>
+        </div>
+
+        <div id="cart">
+            <button onclick="closeCartPage()">
+                <i class="fa-solid fa-circle-xmark fa-2xl"></i>
+            </button>
+            {% if cart_items %} 
+                {% for item in cart_items %}
+                    <h2>Your Orders</h2>
+                    <div class="cart-product">
+                        <div class="page">
+                            <div class="image">
+                                <img src="{{ item.product.image.url }}" style="width: 100px; height: 100px; border-radius: 10px; border: 1px solid black;">
+                            </div>
+
+                            <div class="details">
+                                <h3>{{ item.product.name }}</h3>
+                                <p>${{ item.product.price }}</p>
+                            </div>
+                        </div>
+
+                        <div class="remove">
+                            <div class="remove">
+                                <a href="{% url 'remove_from_cart' item.id %}">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            {% else %}
+                <div class="cartt">
+                    <img src="{% static 'images/download.jpg' %}">
+                    <p>Your cart is empty</p>
+                    <a href="{% url 'product' %}">Get an item</a>
+                </div>
+            {% endif %}
+
         </div>
 
         <div class="m-page">
@@ -416,35 +506,54 @@
                 </div>
 
                 <div class="filter">
+                    <div class="arrange">
+                        <button onclick="flex()">
+                            <i class="fa-light fa-border-all fa-2xl"></i>
+                        </button>
 
+                        <button onclick="block()">
+                            <i class="fa-solid fa-list"></i>
+                        </button>
+                    </div>
+
+                    <div class="sort">
+                       <div class="sort">
+                            <p>Sort:</p>
+
+                            <a href="?sort=recommended">Recommended</a>
+                            <a href="?sort=newest">Newest First</a>
+                            <a href="?sort=low">Lowest Price</a>
+                            <a href="?sort=high">Highest Price</a>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="products">
-                    {% for product in products %}
-                        <div class="item">
-                            <div class="img">
-                                <img src="{{ product.image.url }}">
+                    {% for item in cart_items %}
+                        <div class="cart-item">
+                            <div class="info">
+                                <img src="{{ item.product.image.url }}" style="width:100px;height:100px;border-radius:10px;border:1px solid black;">
+                                <div class="details">
+                                    <h3>{{ item.product.name }}</h3>
+                                    <p>${{ item.product.price }}</p>
+                                </div>
                             </div>
 
-                            <div class="name">
-                                <h3>{{ product.name }}</h3>
+                            <div class="remove">
+                                <a href="{% url 'remove_from_cart' item.id %}">
+                                    Remove
+                                </a>
                             </div>
-
-                            <div class="price">
-                                <p>₵{{ product.price }}</p>
-                                <p>{{ product.quantity }}</p>
-                            </div>
-
-                            <a href="{% url 'add_to_cart' product.id %}">Add to Cart</a>
-                            <a href="">
-                                <i class="fa-regular fa-heart fa-lg"></i>
-                            </a>
                         </div>
                     {% endfor %}
                 </div>
             </div>
         </div>
     </main>
+
+    <footer>
+        {% include 'footer.html' %}
+    </footer>
 
     <script>
         const prev = document.getElementById("prev");
@@ -487,6 +596,21 @@
             }
             else{
                 contact2.style.display = "none";
+            }
+        }
+
+        const cart = document.getElementById("cart");
+        cart.style.display = "none";
+
+        function showProductCart(){
+            if(window.getComputedStyle(cart).display === "none"){
+                cart.style.display = "block";
+            }
+        }
+
+        function closeCartPage(){
+            if(window.getComputedStyle(cart).display === "block"){
+                cart.style.display = "none";
             }
         }
     </script>
