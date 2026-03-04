@@ -66,6 +66,13 @@ def add_to_favorite(request, product_id):
     return redirect('product')
 
 @login_required
+def favorites_page(request):
+    favorite_items = Favorite.objects.filter(user=request.user)
+    return render(request, "favorites.html", {
+        "favorite": favorite_items
+    })
+
+@login_required
 def remove_from_favorite(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     Favorite.objects.filter(user=request.user, product=product).delete()

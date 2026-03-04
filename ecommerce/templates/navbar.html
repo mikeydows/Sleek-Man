@@ -287,6 +287,10 @@
             <div class="sign">
                 {% if user.is_authenticated %}
                     <div class="cart">
+                        <button onclick="showFavorite()">
+                            <i class="fa-solid fa-heart fa-2xl" style="color: white;"></i>
+                        </button>
+
                         <button onclick="showCart()">
                             <i class="fa-solid fa-cart-shopping fa-2xl" style="color: white;"></i>
                         </button>
@@ -318,9 +322,9 @@
                 <div class="nav">
                     {% if user.is_authenticated %}
                         <div class="cart">
-                            <button id="showCart" onclick="showCartPage()">
+                            <a href="{% url 'cart_page' %}">
                                 <i class="fa-solid fa-cart-shopping fa-xl" style="color: white;"></i>
-                            </button>
+                            </a>
 
                             <button onclick="showNavBar()">
                                 <i class="fa-solid fa-align-right fa-lg" style="color: white;"></i>
@@ -396,7 +400,9 @@
                         </div>
 
                         <div class="remove">
-                            <a href="{% url 'remove_from_cart' product.id %}"></a>
+                            <div class="remove">
+                                <a href="{% url 'remove_from_cart' item.id %}">Remove</a>
+                            </div>
                         </div>
                     </div>
                 {% endfor %}
@@ -408,9 +414,44 @@
                     <a href="{% url 'product' %}">Get an item</a>
                 </div>
             {% endif %}
-
         </div>
-    </header>
+
+        <div id="favoritePage">
+            <button onclick="closeFavPage()">
+                <i class="fa-solid fa-circle-xmark fa-2xl"></i>
+            </button>
+
+            {% if favorite %}
+                <h2>Your Favorites</h2>
+                {% for item in favorite %}
+                    <div class="cart-product">
+                        <div class="page">
+                            <div class="image">
+                                <img src="{{ item.product.image.url }}" style="width:100px; height:100px; border-radius:10px; border:1px solid black;">
+                            </div>
+
+                            <div class="details">
+                                <h3>{{ item.product.name }}</h3>
+                                <p>${{ item.product.price }}</p>
+                            </div>
+                        </div>
+
+                        <div class="remove">
+                            <a href="{% url 'remove_from_favorite' item.product.id %}">
+                                <i class="fa-solid fa-trash fa-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="cartt">
+                    <img src="{% static 'images/download.jpg' %}">
+                    <p>No Product Here</p>
+                    <a href="{% url 'product' %}">Get an item</a>
+                </div>
+            {% endif %}
+        </div>
+</header>
 
     <script>
         const cartPage = document.getElementById("cartPage");

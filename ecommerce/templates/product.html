@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
     <script src="https://kit.fontawesome.com/39a01f771c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
     
@@ -243,15 +244,16 @@
     border-radius: 10px;
 }
 
-.products a{
+.products #addCart{
     background-color: black;
     color: white;
     text-decoration: none;
     padding: 10px;
     display: inline-block;
-    width: 120px;
+    width: 90px;
     text-align: center;
     border-radius: 10px;
+    font-size: 0.7em;
 }
 
 .products img{
@@ -302,7 +304,7 @@
     margin: 50px auto;
 }
 
-.cartt a{
+.cartt #addCart{
     background-color: black;
     color: white;
     text-decoration: none;
@@ -348,6 +350,10 @@
             <div class="sign">
                 {% if user.is_authenticated %}
                     <div class="cart">
+                        <button onclick="showFavorite()">
+                            <i class="fa-solid fa-heart fa-2xl" style="color: white;"></i>
+                        </button>
+
                         <button onclick="showProductCart()">
                             <i class="fa-solid fa-cart-shopping fa-2xl" style="color: white;"></i>
                         </button>
@@ -397,7 +403,6 @@
                     <a href="{% url 'product' %}">Get an item</a>
                 </div>
             {% endif %}
-
         </div>
 
         <div class="m-page">
@@ -529,19 +534,25 @@
                 </div>
 
                 <div class="products">
-                    {% for item in cart_items %}
-                        <div class="cart-item">
-                            <div class="info">
-                                <img src="{{ item.product.image.url }}" style="width:100px;height:100px;border-radius:10px;border:1px solid black;">
-                                <div class="details">
-                                    <h3>{{ item.product.name }}</h3>
-                                    <p>${{ item.product.price }}</p>
-                                </div>
+                    {% for product in products %}
+                        <div class="cartt">
+                            <div class="image">
+                                <img src="{{ product.image.url }}" 
+                                    style="width:120px;height:120px;border-radius:2px;">
                             </div>
 
-                            <div class="remove">
-                                <a href="{% url 'remove_from_cart' item.id %}">
-                                    Remove
+                            <div class="details">
+                                <h3>{{ product.name }}</h3>
+                                <p>${{ product.price }}</p>
+                            </div>
+
+                            <div class="add">
+                                <a id="addCart" href="{% url 'add_to_cart' product.id %}">
+                                    Add to cart
+                                </a>
+
+                                <a href="{% url 'add_to_favorite' product.id %}">
+                                    <i class="fa-solid fa-circle-xmark fa-2xl"></i>
                                 </a>
                             </div>
                         </div>
