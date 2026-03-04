@@ -284,6 +284,7 @@
     overflow-x: hidden;
     display: none;
     z-index: 5;
+    padding: 10px;
 }
 
 #cart button{
@@ -373,17 +374,20 @@
             <button onclick="closeCartPage()">
                 <i class="fa-solid fa-circle-xmark fa-2xl"></i>
             </button>
+
+                <div class="cartHead">
+                    <h2>Your Orders</h2>
+                </div>
             {% if cart_items %} 
                 {% for item in cart_items %}
-                    <h2>Your Orders</h2>
                     <div class="cart-product">
                         <div class="page">
                             <div class="image">
-                                <img src="{{ item.product.image.url }}" style="width: 100px; height: 100px; border-radius: 10px; border: 1px solid black;">
+                                <img src="{{ item.product.image.url }}" style="width: 60px; height: 60px; border-radius: 10px; border: 1px solid black;">
                             </div>
 
                             <div class="details">
-                                <h3>{{ item.product.name }}</h3>
+                                <h4>{{ item.product.name }}</h4>
                                 <p>${{ item.product.price }}</p>
                             </div>
                         </div>
@@ -612,10 +616,13 @@
 
         const cart = document.getElementById("cart");
         cart.style.display = "none";
+        cart.style.top = "100px";
+        cart.style.right = "70px";
 
         function showProductCart(){
             if(window.getComputedStyle(cart).display === "none"){
                 cart.style.display = "block";
+                favoritePage.style.display = "none";
             }
         }
 

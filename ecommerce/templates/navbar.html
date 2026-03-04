@@ -215,7 +215,7 @@
     }
 }
 
-#cartPage{
+#cartPage, #favoritePage{
     width: 300px;
     background-color: #ffffff;
     box-shadow: 0 0 3px 0.5px black;
@@ -227,9 +227,18 @@
     overflow-x: hidden;
     display: block;
     z-index: 5;
+    padding: 10px;
 }
 
-#cartPage button{
+#cartPage h2, #cart h2{
+    color: black;
+}
+
+#cartPage *, #cart *{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#cartPage button, #favoritePage button{
     position: relative;
     right: 0;
     background-color: transparent;
@@ -264,7 +273,20 @@
   text-align: center;
 }
 
+.cart-product{
+    color: black;
+    background-color: rgb(228, 224, 224);
+    width: 90%;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 10px;
+}
 
+.cart-product .page{
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
  
 </style>
 <header>
@@ -384,13 +406,17 @@
             <button onclick="closeCartPage()">
                 <i class="fa-solid fa-circle-xmark fa-2xl"></i>
             </button>
+
             {% if cart_items %} 
                 {% for item in cart_items %}
+                <div class="head">
                     <h2>Your Orders</h2>
+                </div>
+
                     <div class="cart-product">
                         <div class="page">
                             <div class="image">
-                                <img src="{{ item.product.image.url }}" style="width: 100px; height: 100px; border-radius: 10px; border: 1px solid black;">
+                                <img src="{{ item.product.image.url }}" style="width: 50px; height: 50px; border-radius: 10px; border: 1px solid black;">
                             </div>
 
                             <div class="details">
@@ -457,14 +483,29 @@
         const cartPage = document.getElementById("cartPage");
         cartPage.style.display = "none";
 
+
         function showCart(){
             if(window.getComputedStyle(cartPage).display === "none"){
                 cartPage.style.display = "block";
+                favoritePage.style.display = "none";
             }
         }
 
         function closeCartPage(){
             if(window.getComputedStyle(cartPage).display === "block"){
+                cartPage.style.display = "none";
+            }
+        }
+
+        const favoritePage = document.getElementById("favoritePage");
+        favoritePage.style.display = "none";
+        favoritePage.style.top = "100px";
+        favoritePage.style.right = "120px";
+
+        function showFavorite(){
+            if(window.getComputedStyle(favoritePage).display === "none"){
+                favoritePage.style.display = "block";
+                cart.style.display = "none";
                 cartPage.style.display = "none";
             }
         }
