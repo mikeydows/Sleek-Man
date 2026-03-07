@@ -5,19 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
+<style>
+    footer{
+        background-color: black;
+        padding: 50px;
+        margin: 100px 0 0 0;
+        color: white;
+    }
+
+    .footer{
+        margin: 20px auto;
+        width: 50%;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .footer a{
+        color: white;
+    }
+
+    .footer h3{
+        margin: 0;
+    }
+
+    @media (max-width:1000px) {
+    .footer{
+        width: 90%;
+        display: block;
+    }
+
+    .socialmedia{
+        text-align: left;
+        margin: 30px 0;
+    }
+    }
+</style>
 <body>
     <div class="footer">
         <div class="pages">
             <h3>Pages</h3>
-            <a href="{% url 'home' %}">Home</a>
-            <a href="{% url 'product' %}">Product</a>
-            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'home' %}">Home</a><br>
+            <a href="{% url 'product' %}">Product</a><br>
+            <a href="{% url 'about' %}">About</a><br>
         </div>
-    </div>
 
-    <div class="tandc">
-        <a href="{% url 'terms' %}">Terms & Conditions</a>
-        <a href="{% url 'product-overview' %}">Product Overview</a>
+        <div class="tandc">
+            <a href="{% url 'terms' %}">Terms & Conditions</a><br>
+            <a href="{% url 'product-overview' %}">Product Overview</a>
+        </div>
+
+        <div class="socialmedia">
+            <h3>Reach us at</h3>
+            <a href="https://www.tiktok.com/@sleek__asee?_r=1">Tiktok</a><br>
+            <a href="https://instagram.com/sleek_man.grooming">Instagram</a><br>
+            <a href="mailto:sleekmangrooming@gmail.com">sleekmangrooming@gmail.com</a><br>
+            <a href="http://wa.me/233594354079">Whatsapp: +233 59 435 4079</a><br>
+            <a href="https://youtube.com/@the_Beard-den_with_Asee?si=msUnoQiwpq1e-fXL">Youtube</a><br>
+            <a href="tel:0506989075">Call us: 0506989075</a>
+        </div>
     </div>
 </body>
 </html>

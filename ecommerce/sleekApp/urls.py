@@ -23,4 +23,5 @@ urlpatterns = [
     path("settings/", views.settings, name="settings"),
     path('terms/', views.termsAndCondition, name="terms"),
     path('product-overview/', views.productOverview, name="product-overview"),
+    #path('checkout/', views.checkout, name="checkout"),
 ]

@@ -237,11 +237,20 @@
     flex-wrap: wrap;
     gap: 1em;
 }
-.products .item{
-    width: 200px;
-    border: 2px black solid;
+
+.products .cartt{
+    width: 170px;
+    border: 1px black solid;
     padding: 10px;
     border-radius: 10px;
+}
+
+.products .cartt .image img{
+    width: 170px;
+    height: 170px;
+    opacity: 100%;
+    box-shadow: 0;
+    border-radius: 0;
 }
 
 .products #addCart{
@@ -270,8 +279,73 @@
         display: flex;
         z-index: 2;
     }
+
+    .slide .pomade{
+    width: 90%;
+    display: block;
+    margin: 50px auto;
+    text-align: center;
 }
 
+    .slide .pomade img{
+        width: 400px;
+    }
+
+.mainhead .buttons{
+    display: none;
+}
+
+.slide .oil{
+    width: 90%;
+    display: none ;
+    align-items: center;
+    margin: 10px auto;
+    gap: 1em;
+}
+
+ .slide .details{
+    width: 90%;
+    margin: 0;
+}
+
+ .slide .details h1{
+    font-size: 3.5em;
+    width: 100%;
+}
+
+    .productPage{
+        width: 80%;
+        padding:30px;
+    }
+
+    .productPage .product{
+        width: 100%;
+        margin: 40px 0;
+    }
+
+    .productPage .product .producthead h2{
+        font-size: 1.2em;
+    }
+
+    .products{
+        gap: 1em;
+    }
+
+    .products .cartt{
+        width: 150px;
+        border: 1px black solid;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .products .cartt .image img{
+        width: 140px;
+        height: 140px;
+        opacity: 100%;
+        box-shadow: 0;
+        border-radius: 0;
+    }
+}
 #cart{
     width: 300px;
     background-color: #ffffff;
@@ -322,6 +396,18 @@
   text-align: center;
 }
 
+.cart-product{
+    color: black;
+    background-color: rgb(228, 224, 224);
+    width: 90%;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.cart-product .page p, .cart-product .page h3{
+    margin: 0;
+}
  
 </style>
 <header>
@@ -514,35 +600,22 @@
                     <h2>Check out our Products</h2>
                 </div>
 
-                <div class="filter">
-                    <div class="arrange">
-                        <button onclick="flex()">
-                            <i class="fa-light fa-border-all fa-2xl"></i>
-                        </button>
+                <div class="sort">
+                    <details>
+                        <summary>Sort</summary>
 
-                        <button onclick="block()">
-                            <i class="fa-solid fa-list"></i>
-                        </button>
-                    </div>
-
-                    <div class="sort">
-                       <div class="sort">
-                            <p>Sort:</p>
-
-                            <a href="?sort=recommended">Recommended</a>
-                            <a href="?sort=newest">Newest First</a>
-                            <a href="?sort=low">Lowest Price</a>
-                            <a href="?sort=high">Highest Price</a>
-                        </div>
-                    </div>
+                        <a href="?sort=recommended">Recommended</a>
+                        <a href="?sort=newest">Newest First</a>
+                        <a href="?sort=low">Lowest Price</a>
+                        <a href="?sort=high">Highest Price</a>
+                    </details>
                 </div>
 
                 <div class="products">
                     {% for product in products %}
                         <div class="cartt">
                             <div class="image">
-                                <img src="{{ product.image.url }}" 
-                                    style="width:120px;height:120px;border-radius:2px;">
+                                <img src="{{ product.image.url }}" >
                             </div>
 
                             <div class="details">

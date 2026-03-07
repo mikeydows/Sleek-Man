@@ -154,3 +154,6 @@ def termsAndCondition(request):
 
 def productOverview(request):
     return render(request, "product-overview.html")
+
+#def checkout(request):
+ #   return render(request, "checkout.html")
